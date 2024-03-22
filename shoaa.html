@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>أبيات الشعر</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: #000 url('stars_background.gif') repeat top center fixed;
+    color: white;
+    overflow: hidden;
+  }
+  .container {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  .poem {
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    color: white;
+  }
+  .like {
+    cursor: pointer;
+    color: white;
+  }
+  button {
+    background-color: black;
+    color: white;
+    font-family: 'Cairo', sans-serif;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  textarea {
+    width: 50%; /* عرض قصير */
+    height: 150px; /* طول منساب */
+    background-color: rgba(255, 255, 255, 0.3);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    resize: none; /* منع تغيير الحجم */
+  }
+  #backButton {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+  }
+</style>
+<script>
+  function toggleForm(show) {
+    document.getElementById('poemForm').style.display = show ? 'block' : 'none';
+    document.getElementById('options').style.display = show ? 'none' : 'block';
+    document.getElementById('backButton').style.display = show ? 'block' : 'none';
+  }
+
+  function submitPoem() {
+    var poemText = document.getElementById('poemInput').value;
+    var poemsContainer = document.getElementById('poems');
+    var poemDiv = document.createElement('div');
+    poemDiv.className = 'poem';
+    poemDiv.innerHTML = '<p>' + poemText + '</p><span class="like" onclick="likePoem(this)">❤️ 0</span>';
+    poemsContainer.appendChild(poemDiv);
+    document.getElementById('poemInput').value = ''; // Clear input field
+    toggleForm(false);
+  }
+
+  function likePoem(likeSpan) {
+    var likes = parseInt(likeSpan.textContent);
+    likeSpan.textContent = '❤️ ' + (likes + 1);
+  }
+</script>
+</head>
+<body>
+<button id="backButton" onclick="toggleForm(false)">رجوع</button>
+<div class="container">
+  <h1>أبيات الشعر</h1>
+  <div id="options">
+    <button onclick="toggleForm(true)">كتابة بيت</button>
+    <button onclick="toggleForm(true)">أبيات الزائرين</button>
+  </div>
+  <div id="poemForm" style="display:none;">
+    <textarea id="poemInput" placeholder="أكتب بيتك هنا..."></textarea>
+    <br>
+    <button onclick="submitPoem()">إدخال</button>
+  </div>
+  <div id="poems">
+    <!-- Poems will be added here -->
+  </div>
+</div>
+</body>
+</html>
